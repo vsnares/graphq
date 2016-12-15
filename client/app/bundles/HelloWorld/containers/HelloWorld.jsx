@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import HelloWorldWidget from '../components/HelloWorldWidget';
+import ContactList from '../components/ContactList';
 
 // Simple example of a React "smart" component
 export default class HelloWorld extends React.Component {
@@ -12,17 +12,12 @@ export default class HelloWorld extends React.Component {
 
     // How to set initial state in ES6 class syntax
     // https://facebook.github.io/react/docs/reusable-components.html#es6-classes
-    this.state = { name: this.props.name };
-  }
-
-  updateName(name) {
-    this.setState({ name });
   }
 
   render() {
     return (
       <div>
-        <HelloWorldWidget name={this.state.name} updateName={e => this.updateName(e)} />
+        <ContactList />
       </div>
     );
   }
