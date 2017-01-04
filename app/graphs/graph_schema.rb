@@ -29,12 +29,11 @@ CreateBlogMutation = GraphQL::Relay::Mutation.define do
    name "CreateBlog"
 
    input_field :title,   !types.String
-   input_field :content, !types.String
 
    return_field :blog, Types::BlogType
 
   resolve ->(obj, inputs, ctx) {
-    blog = Blog.create(title: inputs[:title], content: inputs[:content])
+    blog = Blog.create(title: inputs[:title])
 
     {
       blog: blog,
