@@ -17,6 +17,7 @@ class NewBlog extends React.Component {
     const { submit } = this.props;
 
     const blogFullName = event.target.blogFullName.value;
+    console.log(blogFullName);
 
     return submit(blogFullName).then((res) => {
       if (!res.errors) {
@@ -69,11 +70,9 @@ NewBlog.propTypes = {
 };
 
 const NEW_BLOG_MUTATION = gql`
-  mutation CreateBlogMutation($input: CreateBlogInput!) {
-    createBlog(input: $input) {
-      blog {
+  mutation CreateBlogMutation($blogFullName: String!) {
+    createBlog(blogFullName: $blogFullName) {
         title
-      }
     }
   }
 `;
@@ -82,7 +81,7 @@ const NEW_BLOG_MUTATION = gql`
 const NewBlogWithData = graphql(NEW_BLOG_MUTATION, {
   props: ({ mutate }) => ({
     submit: blogFullName => mutate({
-      variables: { blogFullName },
+      variables: {blogFullName},
     }),
   }),
 })(NewBlog);

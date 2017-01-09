@@ -20,25 +20,17 @@ end
 MutationType = GraphQL::ObjectType.define do
   name "Mutation"
 
-
-  field :createBlog, field: CreateBlogMutation.field
+  field :createBlog do
+    type CreateBlogMutation
+    resolve ->(obj, inputs, ctx) {
+      blog = Blog.create(title: title,)
+    }
+  end
 end
 
-CreateBlogMutation = GraphQL::Relay::Mutation.define do
-
-   name "CreateBlog"
-
-   input_field :title,   !types.String
-
-   return_field :blog, Types::BlogType
-
-  resolve ->(obj, inputs, ctx) {
-    blog = Blog.create(title: inputs[:title])
-
-    {
-      blog: blog,
-    }
-  }
+CreateBlogMutation = GraphQL::ObjectType.define do
+  name "CreateBlog"
+  field :title, !types.String
 end
 
 
