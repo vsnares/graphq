@@ -1,6 +1,3 @@
-// HelloWorldWidget is an arbitrary name for any "dumb" component. We do not recommend suffixing
-// all your dumb component names with Widget.
-
 import React, { PropTypes } from 'react';
 import Blog from '../components/Blog';
 import ReactDOM from 'react-dom';

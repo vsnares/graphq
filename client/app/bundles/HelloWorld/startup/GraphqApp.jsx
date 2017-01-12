@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactOnRails from 'react-on-rails';
 
-import HelloWorld from '../containers/HelloWorld';
+import MainContainer from '../containers/MainContainer';
 
 const GraphqApp = (props) => (
-  <HelloWorld {...props} />
+  <MainContainer {...props} />
 );
 
 // This is how react_on_rails can see the GraphqApp in the browser.
