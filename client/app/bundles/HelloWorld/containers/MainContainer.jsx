@@ -6,6 +6,8 @@ import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import {HashRouter, Match, Miss} from 'react-router'
+
 
 const client = new ApolloClient({
   networkInterface: createNetworkInterface({ uri: 'http://localhost:3000/graphs/simple' }),
@@ -30,14 +32,32 @@ const MyComponentWithData = graphql(MyQuery)(Blog);
 
 const BlogListWithData = graphql(AllBlogsQuery)(BlogList);
 
+const RoutingNoRedux = () => {
+  return (
+    <HashRouter hashType='hashbang'>
+      <div className='App__wrapper'>
+        <Match component={BlogListWithData}
+            exactly
+            pattern='/'
+        />
+
+        <Match component={NewBlogWithData}
+            exactly
+            pattern='/new_blog'
+        />
+      </div>
+    </HashRouter>
+  )
+}
+
 export default class MainContainer extends React.Component {
   render() {
     return (
-      <div>
-        <ApolloProvider client={client}>
-          <NewBlogWithData />
-        </ApolloProvider>
-      </div>
+        <div>
+          <ApolloProvider client={client}>
+            <RoutingNoRedux />
+          </ApolloProvider>
+        </div>
     );
   }
 }

@@ -2,13 +2,17 @@ import React from 'react';
 import { graphql } from 'react-apollo';
 import { browserHistory } from 'react-router';
 import gql from 'graphql-tag';
+import Router from 'react-router/BrowserRouter'
 
 class NewBlog extends React.Component {
   constructor() {
     super();
     this.state = {};
-
     this.submitForm = this.submitForm.bind(this);
+  }
+
+  navigate() {
+    const { router } = this.context
   }
 
   submitForm(event) {
@@ -21,7 +25,7 @@ class NewBlog extends React.Component {
 
     return submit(blogFullName).then((res) => {
       if (!res.errors) {
-        browserHistory.push('/feed/new');
+        this.context.router.transitionTo('/')
       } else {
         this.setState({ errors: res.errors });
       }
@@ -68,6 +72,10 @@ class NewBlog extends React.Component {
 NewBlog.propTypes = {
   submit: React.PropTypes.func.isRequired,
 };
+
+NewBlog.contextTypes = {
+  router: React.PropTypes.object
+}
 
 const NEW_BLOG_MUTATION = gql`
   mutation CreateBlogMutation($blogFullName: String!) {
