@@ -1,8 +1,10 @@
 import React, { PropTypes } from 'react';
-import Blog from '../components/Blog';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import Redirect from 'react-router/Redirect'
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
+import Blog from '../components/Blog';
 
 class BlogList extends React.Component {
   constructor() {
@@ -43,4 +45,14 @@ BlogList.propTypes = {
   }).isRequired,
 };
 
-export default BlogList;
+const AllBlogsQuery = gql` query {
+  all_blogs {
+    id
+    title
+    content
+  }
+}`;
+
+const BlogListWithData = graphql(AllBlogsQuery)(BlogList);
+
+export default BlogListWithData
