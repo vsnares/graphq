@@ -3,11 +3,12 @@ import { graphql } from 'react-apollo';
 import { browserHistory } from 'react-router';
 import gql from 'graphql-tag';
 import Router from 'react-router/BrowserRouter'
+import Redirect from 'react-router/Redirect'
 
 class NewBlog extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {submit: false};
     this.submitForm = this.submitForm.bind(this);
   }
 
@@ -25,6 +26,7 @@ class NewBlog extends React.Component {
 
     return submit(blogFullName).then((res) => {
       if (!res.errors) {
+        this.state.submit = true
         this.context.router.transitionTo('/')
       } else {
         this.setState({ errors: res.errors });
