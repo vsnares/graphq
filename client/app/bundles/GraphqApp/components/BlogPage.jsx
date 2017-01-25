@@ -1,11 +1,11 @@
-import {React, propTypes} from 'react'
+import React from 'react'
+import { withRouter } from 'react-router'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import BlogCard from './BlogCard'
 
 class BlogPage extends React.Component {
   render () {
-    const { push } = this.context.history;
     if (this.props.data.loading) {
       return (<div>Loading</div>)
     }
@@ -17,9 +17,13 @@ class BlogPage extends React.Component {
 
     return (
       <div>
-        <BlogCard blog={this.props.data.Blog} handleCancel={push('/')}/>
+        <BlogCard blog={this.props.data.Blog} handleCancel={this.goBack}/>
       </div>
     )
+  }
+
+  goBack = () => {
+    this.props.router.replace('/')
   }
 }
 
@@ -32,10 +36,6 @@ BlogPage.propTypes = {
   router: React.PropTypes.object.isRequired,
   params: React.PropTypes.object.isRequired,
 }
-
-BlogPage.contextTypes = {
-  history: propTypes.historyContext
-};
 
 const BlogQuery = gql`
   query BlogQuery($id: ID!) {
@@ -52,6 +52,6 @@ const BlogPageWithQuery = graphql(BlogQuery, {
       id: ownProps.params.blogId
     }
   })
-})(BlogPage)
+})(withRouter(BlogPage))
 
 export default BlogPageWithQuery
