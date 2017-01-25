@@ -1,16 +1,16 @@
 import React, { PropTypes } from 'react';
+import { Link } from 'react-router'
 
-class Blog extends React.Component {
+export default class Blog extends React.Component {
+
   render() {
     return(
-      <li className="contact">
-        <div className="contact-info">
-          <div className="contact-name"> {this.props.title} </div>
-          <div className="contact-number"> {this.props.content} </div>
-        </div>
-      </li>
+      <div className="blog-prewiew">
+        <Link to={`/view/${this.props.id}`}>
+          <div className="blog-name"> {this.props.title} </div>
+        </Link>
+        <div className="blog-content"> {this.props.content} </div>
+      </div>
     );
   }
 }
-
-export default Blog

@@ -26,7 +26,8 @@ class BlogList extends React.Component {
             <ul className="blogs-list">
               {
                 this.props.data.all_blogs.map(element => {
-                  return <Blog key=     {element.id}
+                  return <Blog    key=     {element.id}
+                                  id=      {element.id}
                                   title=   {element.title}
                                   content= {element.content}/>
                 })

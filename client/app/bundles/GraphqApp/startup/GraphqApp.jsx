@@ -5,6 +5,7 @@ import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import BlogList from '../components/BlogList';
 import NewBlogWithData from '../components/NewBlog';
+import BlogPage from '../components/BlogPage';
 
 const client = new ApolloClient({
   networkInterface: createNetworkInterface({ uri: 'http://localhost:3000/graphs/simple' }),
@@ -24,6 +25,8 @@ const RoutingNoRedux = () => {
             exactly
             pattern='/new_blog'
         />
+
+  
       </div>
     </HashRouter>
   )
