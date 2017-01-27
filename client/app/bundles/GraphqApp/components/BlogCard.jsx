@@ -33,35 +33,26 @@ class BlogCard extends React.Component {
     return (
       <div>
         <input
-          value={this.props.blog.title}
+          value={this.state.title}
           placeholder='Title'
-          readOnly={true}
           onChange={(e) => this.setState({title: e.target.value})}
         />
         <input
-          value={this.props.blog.content}
+          value={this.state.content}
           placeholder='Content'
-          readOnly={true}
           onChange={(e) => this.setState({content: e.target.value})}
         />
         <button onClick={this.handleDelete}>Delete</button>
         <button onClick={this.props.handleCancel}>Cancel</button>
-        {this.canUpdate()
-          ? <button onClick={this.handleUpdate}>Update</button>
-          : <button disabled>Update</button>
-        }
+        <button onClick={this.handleUpdate}>Update</button>
       </div>
     )
   }
 
-  canUpdate = () => {
-  return this.state.title && this.state.content &&
-    (this.props.blog.title !== this.state.title ||
-      this.props.blog.content !== this.state.content)
-  }
-
   handleUpdate = () => {
-    this.props.updateBlog({variables: { id: this.props.blog.id, title: this.state.title, content: this.state.content }})
+    const {title, content} = this.state
+    console.log(this.props.blog.id)
+    this.props.updateBlog({variables: { id: this.props.blog.id, title: title, content: content }})
       .then(this.props.afterChange)
   }
 
@@ -71,14 +62,15 @@ class BlogCard extends React.Component {
   }
 }
 
+
 const updateBlog = gql`
   mutation updateBlog($id: ID!, $title: String!, $content: String!) {
     updateBlog(id: $id, title: $title, content: $content) {
       id
-      title
-      content
+      ... BlogCardBlog
     }
   }
+  ${BlogCard.fragments.blog}
 `
 
 const deleteBlog = gql`
@@ -88,6 +80,7 @@ const deleteBlog = gql`
     }
   }
 `
+
 const BlogCardWithMutations =  compose(
   graphql(deleteBlog, {
     name : 'deleteBlog'

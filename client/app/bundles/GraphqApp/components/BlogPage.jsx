@@ -3,6 +3,7 @@ import { withRouter } from 'react-router'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import BlogCard from './BlogCard'
+import { filter } from 'graphql-anywhere'
 
 class BlogPage extends React.Component {
 
@@ -30,7 +31,9 @@ class BlogPage extends React.Component {
 
     return (
       <div>
-        <BlogCard blog={blog} handleCancel={this.goBack}/>
+        <BlogCard blog={filter(BlogCard.fragments.blog, blog)}
+                  handleCancel={this.goBack}
+                  afterChange={this.goBack}/>
       </div>
     )
   }
@@ -46,7 +49,7 @@ const BlogQuery = gql`
       ... BlogCardBlog
     }
   }
-  ${BlogCard.fragments.pokemon}
+  ${BlogCard.fragments.blog}
 `
 const BlogPageWithQuery = graphql(BlogQuery, {
   options: (ownProps) => ({
