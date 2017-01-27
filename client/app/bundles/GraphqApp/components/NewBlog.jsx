@@ -1,97 +1,72 @@
-import React from 'react';
-import { graphql } from 'react-apollo';
-import { browserHistory } from 'react-router';
-import gql from 'graphql-tag';
+import React from 'react'
+import { withRouter } from 'react-router'
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
 
 class NewBlog extends React.Component {
-  constructor() {
-    super();
-    this.state = {submit: false};
-    this.submitForm = this.submitForm.bind(this);
+
+  static propTypes = {
+    router: React.PropTypes.object.isRequired,
+    mutate: React.PropTypes.func.isRequired,
+    params: React.PropTypes.object.isRequired,
   }
 
-  navigate() {
-    const { router } = this.context
+  state = {
+    title: '',
+    content: '',
   }
 
-  submitForm(event) {
-    event.preventDefault();
-
-    const { submit } = this.props;
-
-    const blogFullName = event.target.blogFullName.value;
-    console.log(blogFullName);
-
-    return submit(blogFullName).then((res) => {
-      if (!res.errors) {
-        this.state.submit = true
-        this.context.router.transitionTo('/')
-      } else {
-        this.setState({ errors: res.errors });
-      }
-    });
-  }
-
-  render() {
-    const { errors } = this.state;
+  render () {
     return (
       <div>
-        <h1>Add New Blog</h1>
-
-        <form onSubmit={this.submitForm}>
-          <div className="form-group">
-            <label htmlFor="exampleInputEmail1">
-              Blog name
-            </label>
-
-            <input
-              type="text"
-              className="form-control"
-              id="exampleInputEmail1"
-              name="blogFullName"
-              placeholder="blog name"
-            />
-          </div>
-
-          {errors && (
-            <div className="alert alert-danger" role="alert">
-              {errors[0].message}
-            </div>
-          )}
-
-
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-        </form>
+        <input
+          value={this.state.title}
+          placeholder='title'
+          onChange={(e) => this.setState({title: e.target.value})}
+        />
+      <br/>
+        <input
+          value={this.state.content}
+          placeholder='Content'
+          onChange={(e) => this.setState({content: e.target.value})}
+        />
+        <div>
+          <button onClick={this.handleCancel}>Cancel</button>
+          {this.canSave()
+            ? <button onClick={this.handleSave}>Save</button>
+            : <button disabled>Save</button>
+          }
+        </div>
       </div>
-    );
+    )
   }
-}
 
-NewBlog.propTypes = {
-  submit: React.PropTypes.func.isRequired,
-};
+  canSave = () => {
+    return this.state.title && this.state.content
+  }
 
-NewBlog.contextTypes = {
-  router: React.PropTypes.object
+  handleSave = () => {
+    const {title, content} = this.state
+    this.props.mutate({variables: {title, content}})
+      .then(() => {
+        this.props.router.replace('/blogs')
+      })
+  }
+
+  handleCancel = () => {
+    this.props.router.replace('/blogs')
+  }
 }
 
 const NEW_BLOG_MUTATION = gql`
-  mutation CreateBlogMutation($blogFullName: String!) {
-    createBlog(blogFullName: $blogFullName) {
+  mutation CreateBlogMutation($title: String!, $content: String!) {
+    createBlog(title: $title, content: $content) {
         title
+        content
     }
   }
 `;
 
+const NewBlogWithdata = graphql(NEW_BLOG_MUTATION)(withRouter(NewBlog))
 
-const NewBlogWithData = graphql(NEW_BLOG_MUTATION, {
-  props: ({ mutate }) => ({
-    submit: blogFullName => mutate({
-      variables: {blogFullName},
-    }),
-  }),
-})(NewBlog);
-
-export default NewBlogWithData;
+export default NewBlogWithdata

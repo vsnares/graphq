@@ -4,9 +4,10 @@ module Mutations
 
     field :createBlog do
       type Types::BlogType
-      argument :blogFullName, !types.String
+      argument :title, !types.String
+      argument :content, types.String
       resolve ->(obj, args, ctx) {
-        blog = Blog.create(title: args[:blogFullName])
+        blog = Blog.create(title: args[:title], content: args[:content])
       }
     end
   end
