@@ -49,6 +49,8 @@ const AllBlogsQuery = gql` query {
   }
 }`;
 
-const BlogListWithData = graphql(AllBlogsQuery)(BlogList);
+const BlogListWithData = graphql(AllBlogsQuery, {
+  options: { forceFetch: true }
+})(BlogList);
 
 export default BlogListWithData

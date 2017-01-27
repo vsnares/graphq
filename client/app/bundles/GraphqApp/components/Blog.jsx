@@ -7,9 +7,9 @@ export default class Blog extends React.Component {
     return(
       <div className="blog-prewiew">
         <Link to={`/view/${this.props.id}`}>
-          <div className="blog-name"> {this.props.title} </div>
+          <li className="blog-name"> {this.props.title} </li>
         </Link>
-        <div className="blog-content"> {this.props.content} </div>
+        <p className="blog-content"> {this.props.content} </p>
       </div>
     );
   }
