@@ -1,9 +1,20 @@
 import React from 'react'
+import { propType } from 'graphql-anywhere'
+import gql from 'graphql-tag'
 
 export default class BlogCard extends React.Component {
 
+  static fragments = {
+    pokemon: gql`
+      fragment BlogCardBlog on Blog {
+        title
+        content
+      }
+    `
+  }
+
   static propTypes = {
-    blog: React.PropTypes.object.isRequired,
+    blog: propType(BlogCard.fragments.blog).isRequired,
     handleCancel: React.PropTypes.func.isRequired,
   }
 

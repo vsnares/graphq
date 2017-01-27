@@ -26,9 +26,11 @@ class BlogPage extends React.Component {
       return (<div>An unexpected error occurred</div>)
     }
 
+    const blog = this.props.data.blog
+
     return (
       <div>
-        <BlogCard blog={this.props.data.blog} handleCancel={this.goBack}/>
+        <BlogCard blog={blog} handleCancel={this.goBack}/>
       </div>
     )
   }
@@ -41,11 +43,10 @@ class BlogPage extends React.Component {
 const BlogQuery = gql`
   query BlogQuery($id: ID!) {
     blog(id: $id) {
-      id
-      title
-      content
+      ... BlogCardBlog
     }
   }
+  ${BlogCard.fragments.pokemon}
 `
 const BlogPageWithQuery = graphql(BlogQuery, {
   options: (ownProps) => ({
