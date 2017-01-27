@@ -1,15 +1,10 @@
 import React, { PropTypes } from 'react';
-import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
-import Redirect from 'react-router/Redirect'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Blog from '../components/Blog';
 
 class BlogList extends React.Component {
-  constructor() {
-    super();
-  }
 
   render() {
     console.log("render")
@@ -26,10 +21,10 @@ class BlogList extends React.Component {
             <ul className="blogs-list">
               {
                 this.props.data.all_blogs.map(element => {
-                  return <Blog    key=     {element.id}
-                                  id=      {element.id}
-                                  title=   {element.title}
-                                  content= {element.content}/>
+                  return <Blog    key={element.id}
+                                  id={element.id}
+                                  title={element.title}
+                                  content={element.content}/>
                 })
               }
             </ul>

@@ -5,6 +5,17 @@ import gql from 'graphql-tag'
 import BlogCard from './BlogCard'
 
 class BlogPage extends React.Component {
+
+  static propTypes = {
+    data: React.PropTypes.shape({
+      loading: React.PropTypes.bool,
+      error: React.PropTypes.object,
+      blog: React.PropTypes.object,
+    }).isRequired,
+    router: React.PropTypes.object.isRequired,
+    params: React.PropTypes.object.isRequired,
+  }
+
   render () {
     if (this.props.data.loading) {
       return (<div>Loading</div>)
@@ -17,29 +28,19 @@ class BlogPage extends React.Component {
 
     return (
       <div>
-        <BlogCard blog={this.props.data.Blog} handleCancel={this.goBack}/>
+        <BlogCard blog={this.props.data.blog} handleCancel={this.goBack}/>
       </div>
     )
   }
 
   goBack = () => {
-    this.props.router.replace('/')
+    this.props.router.replace('/blogs')
   }
-}
-
-BlogPage.propTypes = {
-  data: React.PropTypes.shape({
-    loading: React.PropTypes.bool,
-    error: React.PropTypes.object,
-    Pokemon: React.PropTypes.object,
-  }).isRequired,
-  router: React.PropTypes.object.isRequired,
-  params: React.PropTypes.object.isRequired,
 }
 
 const BlogQuery = gql`
   query BlogQuery($id: ID!) {
-    Blog(id: $id) {
+    blog(id: $id) {
       id
       title
       content

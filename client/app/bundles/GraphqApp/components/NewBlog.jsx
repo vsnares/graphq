@@ -2,8 +2,6 @@ import React from 'react';
 import { graphql } from 'react-apollo';
 import { browserHistory } from 'react-router';
 import gql from 'graphql-tag';
-import Router from 'react-router/BrowserRouter'
-import Redirect from 'react-router/Redirect'
 
 class NewBlog extends React.Component {
   constructor() {
