@@ -29,7 +29,7 @@ require 'capistrano/rails'
 require 'capistrano/passenger'
 
 require 'capistrano/rbenv'
-set :rbenv_custom_path, '/home/deploy/.rbenv/bin/rbenv'
+set :rbenv_custom_path, '/home/deploy/.rbenv/'
 set :rbenv_type, :user
 set :rbenv_ruby, '2.4.0'
 # require "capistrano/rvm"
