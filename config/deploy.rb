@@ -3,7 +3,6 @@ lock "3.7.2"
 
 set :application, "graphq"
 set :repo_url, "git@github.com:vsnares/graphq.git"
-set :bundle_env_variables, { 'NOKOGIRI_USE_SYSTEM_LIBRARIES' => 1 }
 
 set :deploy_to, '/home/deploy/graphq'
 
