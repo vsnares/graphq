@@ -1,10 +1,3 @@
-require 'capistrano/rails'
-require 'capistrano/passenger'
-
-require 'capistrano/rbenv'
-set :rbenv_type, :user
-set :rbenv_ruby, '2.4.0'
-
 # Load DSL and set up stages
 require "capistrano/setup"
 
@@ -32,7 +25,12 @@ install_plugin Capistrano::SCM::Git
 #   https://github.com/capistrano/bundler
 #   https://github.com/capistrano/rails
 #   https://github.com/capistrano/passenger
-#
+require 'capistrano/rails'
+require 'capistrano/passenger'
+
+require 'capistrano/rbenv'
+set :rbenv_type, :user
+set :rbenv_ruby, '2.4.0'
 # require "capistrano/rvm"
 # require "capistrano/rbenv"
 # require "capistrano/chruby"
