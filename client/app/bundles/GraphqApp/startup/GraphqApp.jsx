@@ -19,7 +19,8 @@ class GraphqApp extends React.Component {
         <div>
           <ApolloProvider client={client}>
             <Router history={browserHistory}>
-              <Route path='/blogs' component={BlogList} />
+              <Route path='/blogs' component={BlogList}>
+              </Route>
               <Route path='/new_blog' component={NewBlogWithData} />
               <Route path='/view/:blogId' component={BlogPage} />
             </Router>

@@ -17,6 +17,7 @@ class BlogList extends React.Component {
     } else if (this.props.data.all_blogs)  {
         return (
           <div className="blogs">
+            {console.log(this.props.data.all_blogs.count)}
             <Link to='/new_blog'>Create New Blog</Link><br />
             <ul className="blogs-list">
               {

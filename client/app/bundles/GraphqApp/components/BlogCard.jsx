@@ -44,9 +44,17 @@ class BlogCard extends React.Component {
         />
         <button onClick={this.handleDelete}>Delete</button>
         <button onClick={this.props.handleCancel}>Cancel</button>
-        <button onClick={this.handleUpdate}>Update</button>
+        {this.canUpdate()
+          ? <button onClick={this.handleUpdate}>Update</button>
+          : <button disabled>Update</button>
+        }
       </div>
     )
+  }
+
+  canUpdate = () => {
+   return this.state.title && this.state.content &&
+     (this.props.blog.title !== this.state.title || this.props.blog.content !== this.state.content)
   }
 
   handleUpdate = () => {
