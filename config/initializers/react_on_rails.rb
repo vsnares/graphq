@@ -22,7 +22,7 @@ ReactOnRails.configure do |config|
 
   # This configures the script to run to build the production assets by webpack. Set this to nil
   # if you don't want react_on_rails building this file for you.
-  config.npm_build_production_command = "npm run build:production"
+  config.npm_build_production_command = nil
 
   ################################################################################
   # CLIENT RENDERING OPTIONS
@@ -67,11 +67,11 @@ ReactOnRails.configure do |config|
   config.skip_display_none = false
 
   # The server render method - either ExecJS or NodeJS
-  config.server_render_method = "ExecJS"
+  config.server_render_method = "NodeJS"
 
   # Client js uses assets not digested by rails.
   # For any asset matching this regex, non-digested symlink will be created (what webpack's css wants)
   # To disable symlinks set this parameter to nil.
-  config.symlink_non_digested_assets_regex = /\.(png|jpg|jpeg|gif|tiff|woff|ttf|eot|svg|map)/
+  config.symlink_non_digested_assets_regex = nil
 
 end
